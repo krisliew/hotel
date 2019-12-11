@@ -5,7 +5,9 @@
         <p>Make your reservation here.</p>
     </div>
     <div class="bodyBooking">
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <!-- <b-form @submit="onSubmit" @reset="onReset" v-if="show"> -->
+        <b-form v-on:submit.prevent="onSubmit" @reset="onReset" v-if="show">
+            
         <b-form-group
             id="input-group-1"
             label="Email address:"
@@ -104,6 +106,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import format from 'date-fns/format'
 import HotelDatePicker from 'vue-hotel-datepicker'
 
@@ -137,14 +140,28 @@ export default {
             return format(date, 'DD/MM/YYYY')
         }
       },
-
       onSubmit(evt) {
-        evt.preventDefault()
         console.log(JSON.stringify(this.form))
         alert(JSON.stringify(this.form))
+
+        axios.post('/postBooking',
+            {
+              ID:this.username,
+              email:this.email,
+              password:this.password,
+              publicAddress:this.publicAddress
+            }).then(res => {
+                console.log(res) //Return of the Post method from localhost:5000/postBooking
+              if(res.data.Error == 1){
+                //do smtg demo
+              }              
+            }).catch(err => {
+              console.log(err)
+              this.publicAddressErr = "Connection Error: Please try again later or contact support!'"
+            })
+        
       },
       onReset(evt) {
-        evt.preventDefault()
         // Reset our form values
         this.form.email = ''
         this.form.name = ''
@@ -153,6 +170,8 @@ export default {
         this.form.gender = ''
         this.form.room = null
         this.form.roomType = null
+        this.form.checkIn = ''
+        this.form.checkOut = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {

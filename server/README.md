@@ -3,7 +3,7 @@
 > OOAD Assignment Year 3 Semester 1 2019
 
 # Usage
-> API to CRUD on mySQL database
+> API server to CRUD on mySQL database
 
 ## Build Setup
 

@@ -5,33 +5,34 @@ const jwt = require("jsonwebtoken")
 
 const con = require("../database/db")
 
+const mail = require("../database/mail")
+
 bookings.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
 bookings.get("/test",(req,res) =>{   
-    res.json({msg: "Test passed"})
+    res.json({msg: "API Test passed"})
 })
 
 bookings.post("/postBooking", (req, res) => { //Continue here
     // TO-DO: Add return response of ID / email is used. 
     console.log(req.body)
     var insertData = {
-        ID: req.body.ID.toLowerCase(),
-        publicAddress:(req.body.publicAddress).toUpperCase()
+        
     }
     console.log("\n")
     console.log("/postBooking JSON:" + insertData)
     console.log(insertData)
-    var sqlQuery = "INSERT INTO userspoll value('" + insertData.ID + "','" + insertData.publicAddress + "')";
-    con.query(sqlQuery, function(err, result){
-        if(err){
-            console.log(err)            
-		}else{
-            res.json({ Pass: 1})
-            console.log(result.affectedRows + " record(s) updated")
-		}
-	});
+    // var sqlQuery = "INSERT INTO userspoll value('" + insertData.ID + "','" + insertData.publicAddress + "')";
+    // con.query(sqlQuery, function(err, result){
+    //     if(err){
+    //         console.log(err)            
+	// 	}else{
+    //         res.json({ Pass: 1})
+    //         console.log(result.affectedRows + " record(s) updated")
+	// 	}
+	// });
 
 })
 
