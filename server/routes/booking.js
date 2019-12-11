@@ -34,6 +34,7 @@ bookings.post("/postBooking", (req, res) => { //Continue here
     console.log("\n")
     console.log("Processed JSON in local var:")
     console.log(insertData)
+    var sqlQuery = "INSERT INTO reservation value()";
 
     res.json({Pass:1}) //return test
     

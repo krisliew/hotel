@@ -1,16 +1,6 @@
 package CRUD;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
-
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public class Food_Order extends HotelDetails {
 
@@ -22,7 +12,7 @@ public class Food_Order extends HotelDetails {
     public CRUD_1 getRecord(ArrayList<CRUD_1> food_order, String food_orderId, String menuId, String roomId, String guestId){ 
         int index=-1; 
         for(int i=0;i<food_order.size();i++){
-            if(food_order.get(i).getMenuID().equals(food_orderId) && food_order.get(i).getMenuID().equals(menuId) && food_order.get(i).getRoomID().equals(roomId) && food_order.get(i).getGuestID()
+            if(food_order.get(i).getOrderID().equals(food_orderId) && food_order.get(i).getMenuID().equals(menuId) && food_order.get(i).getRoomID().equals(roomId) && food_order.get(i).getGuestID()
             		.equals(guestId))
                 index=i;
         }
@@ -44,6 +34,7 @@ public class Food_Order extends HotelDetails {
     
     //Update the Records
     public void setRecord(ArrayList<CRUD_1> food_order, CRUD_1 target){
+    	System.out.println("Working final");
     	CRUD_1 current = getRecord(food_order, target.getOrderID(), target.getMenuID(), target.getRoomID(), target.getGuestID());
         if(current!=null){
         	current.setQuantity(target.getQuantity());

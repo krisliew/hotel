@@ -246,21 +246,21 @@ public class Food_Order_Display extends JPanel {
 				}
 							
 				if(actionName.equals("Update")) {
-					if(foodOrder.isRecordExist(foodOrderList, new CRUD_1(orderID, menuID, roomID, guestID, Integer.parseInt(quantity), Double.parseDouble(orderTotalPrice), remarks ))){
-						JOptionPane.showMessageDialog(null, " Failed to update food order record as the exact record already exists!");
-						errCounter ++;
-					}else if(!foodOrder.isIdExist(foodOrderList, orderID, menuID, roomID, guestID)){
-						JOptionPane.showMessageDialog(null, "Failed to update food order record as no such ID is found!");
-						errCounter ++;
-					}
+//					if(foodOrder.isRecordExist(foodOrderList, new CRUD_1(orderID, menuID, roomID, guestID, Integer.parseInt(quantity), Double.parseDouble(orderTotalPrice), remarks ))){
+//						JOptionPane.showMessageDialog(null, " Failed to update food order record as the exact record already exists!");
+//						errCounter ++;
+//					}else if(!foodOrder.isIdExist(foodOrderList, orderID, menuID, roomID, guestID)){
+//						JOptionPane.showMessageDialog(null, "Failed to update food order record as no such ID is found!");
+//						errCounter ++;
+//					}
 				}
 			}
 
 			if(actionName.equals("Delete")) {
-				if(!foodOrder.isIdExist(foodOrderList, orderID, menuID, roomID, guestID)){
-					JOptionPane.showMessageDialog(null, "Failed to update food order record as no such ID is found!");
-					errCounter ++;
-				}
+//				if(!foodOrder.isIdExist(foodOrderList, orderID, menuID, roomID, guestID)){
+//					JOptionPane.showMessageDialog(null, "Failed to update food order record as no such ID is found!");
+//					errCounter ++;
+//				}
 			}
 		}
 
