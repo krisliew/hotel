@@ -1,0 +1,36 @@
+<template>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="/">Logo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" href="/booking">Booking</a>
+      </li>
+      <b-nav-item-dropdown text="Rooms & Cottages" right>
+        <b-dropdown-item href="/room">Room</b-dropdown-item>
+        <b-dropdown-item href="/cottage">Cottages</b-dropdown-item>
+      </b-nav-item-dropdown>
+      <li class="nav-item">
+        <a class="nav-link" href="/services">Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/contact">Contact</a>
+      </li>    
+    </ul>
+  </div>  
+</nav>
+</template>
+
+<script>
+export default {
+    name:'Navigation',
+  data(){ return{} },
+  
+}
+</script>
+
+<style scoped>
+</style>
