@@ -10,7 +10,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://thesmartlocal.com/images/easyblog_articles/2536/b2ap3_medium_image19.png" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Two Room Cottage">
@@ -54,7 +54,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://s7d2.scene7.com/is/image/ritzcarlton/RCREYNO_00270?$XlargeViewport100pct$" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Three Room Cottage">
@@ -98,7 +98,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://q-cf.bstatic.com/images/hotel/max1024x768/754/75476399.jpg" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Four Room Cottage">

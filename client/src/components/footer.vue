@@ -1,13 +1,14 @@
 <template>
 <footer id="footer">
     <div class="container">
-        
       <div class="footer-block">      
           <img src="..\assets\img\Giant forest Inn Hotel Logo.png"/>    
           <p class="footerInfo">
-          Address: 7921 South Pin Oak Drive Tracy, CA 95376 <br />
-          Contact-No: 209-200-6070 <br />
           Email: <a href="mailto:stackoverkill@outlook.com?Subject=Enquiry%20on%20Giant%20Forest%20Inn"> giantForestInn@hotel.com</a>
+          <br />
+          Contact No: 209-200-6070
+          <br />
+          Address: 7921 South Pin Oak Drive Tracy, CA 95376 
           </p>
       </div>      
     </div>

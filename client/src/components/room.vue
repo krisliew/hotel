@@ -10,7 +10,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://pix10.agoda.net/hotelImages/45106/-1/5a693ff2558cdd9c8b91dd96f8142a94.jpg?s=1024x768" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Queen 1 Room">
@@ -54,7 +54,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://q-cf.bstatic.com/images/hotel/max1024x768/189/189093180.jpg" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Queen 2 Room">
@@ -98,7 +98,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://q-cf.bstatic.com/images/hotel/max1024x768/222/222927229.jpg" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Two Room">
@@ -146,7 +146,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://r-cf.bstatic.com/images/hotel/max1280x900/166/166530543.jpg" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Three Room">
@@ -194,7 +194,7 @@
     <b-card no-body class="overflow-hidden">
         <b-row no-gutters>
             <b-col md="4">
-                <b-card-img src="https://picsum.photos/id/236/2592/1944" class="rounded-0"></b-card-img>
+                <b-card-img src="https://d2ile4x3f22snf.cloudfront.net/wp-content/uploads/sites/237/2018/01/20072711/One-World-Hotel-Petaling-Jaya-Malaysia-Wedding-Bridal-Suite.jpg" class="rounded-0"></b-card-img>
             </b-col>
             <b-col class="roomDesc" md="8">
             <b-card-body title="Bridal Room">
