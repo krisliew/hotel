@@ -16,9 +16,9 @@
       <li class="nav-item">
           <a class="nav-link" href="/booking">Booking</a>
       </li>    
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="/contact">Contact</a>
-      </li>    
+      </li>     -->
     </ul>
   </div>  
 </nav>
