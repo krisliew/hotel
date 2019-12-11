@@ -1,6 +1,7 @@
 # giant-forest-inn-hotel
 
 > OOAD Assignment Year 3 Semester 1 2019
+> This server is used to CRUD on mySQL database
 
 ## Build Setup
 
