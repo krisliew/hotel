@@ -257,10 +257,10 @@ public class Food_Order_Display extends JPanel {
 			}
 
 			if(actionName.equals("Delete")) {
-//				if(!foodOrder.isIdExist(foodOrderList, orderID, menuID, roomID, guestID)){
-//					JOptionPane.showMessageDialog(null, "Failed to update food order record as no such ID is found!");
-//					errCounter ++;
-//				}
+				if(!foodOrder.isIdExist(foodOrderList, orderID, menuID, roomID, guestID)){
+					JOptionPane.showMessageDialog(null, "Failed to update food order record as no such ID is found!");
+					errCounter ++;
+				}
 			}
 		}
 
@@ -268,6 +268,39 @@ public class Food_Order_Display extends JPanel {
 	}
 
 
+	
+	void executeSQLUpdatePrice() {
+		String query = "UPDATE food_order fo, menu m SET fo.orderTotalPrice = m.menuPrice * fo.quantity;";
+
+		
+		Connection conn = null;
+		java.sql.Statement stmt;
+		ResultSet rs;
+
+	       try{
+	    	   conn = DriverManager.getConnection(db.getURL(), db.getUserName(), db.getPassword()); //connect to the database
+	   		
+	    	   stmt = conn.createStatement();
+	    	   
+	    	   
+	    	   
+	           if((stmt.executeUpdate(query)) == 1)
+	           {
+	               // refresh jtable data
+	               DefaultTableModel model = (DefaultTableModel)table.getModel();
+	               model.setRowCount(0);
+	               refreshTable();
+
+	               
+	               System.out.println("Can Update");
+	           }else{
+	               System.out.println("Cannot Update");
+	           }
+	       }catch(Exception ex){
+	           ex.printStackTrace();
+	       }
+	}
+	
 
 	/*
 	Executes Insert, Update and Delete Queries passed in when the user clicks the Add, Update or Delete Button
@@ -276,6 +309,8 @@ public class Food_Order_Display extends JPanel {
 	@param message: The message to indicate the action of this query (Insert / Update / Delete) 
 	*/
 	void executeSQL(String query, String message) {
+		
+		
 		
 		Connection conn = null;
 		java.sql.Statement stmt;
@@ -306,7 +341,8 @@ public class Food_Order_Display extends JPanel {
 	void displayData() {
 		
 		
-
+		
+		
 		Connection conn = null;
 		java.sql.Statement stmt;
 		ResultSet rs;
@@ -371,7 +407,8 @@ public class Food_Order_Display extends JPanel {
 			conn.setAutoCommit(false);//do not auto commit the SQL statements
 			stmt = conn.createStatement();//prepare the create a SQL statement
 			rs = stmt.executeQuery("SELECT * from food_order ORDER BY LENGTH(orderID), orderID asc");//SQL select query to display the class type // e.roleID,
-			
+
+			int i = 0;
 			//add the rows in the class type details database to the JTable
 			Object[] row = new Object[7];
 			while (rs.next()) { 
@@ -385,8 +422,9 @@ public class Food_Order_Display extends JPanel {
 				remarks = rs.getString(7);
 
 	
+				
 				foodOrder.addRecord(foodOrderList, new CRUD_1(orderID, menuID, roomID, guestID, quantity, orderTotalPrice, remarks ));
-			
+
 				
 				row[0] = orderID;
 				row[1] = menuID;
@@ -426,7 +464,11 @@ public class Food_Order_Display extends JPanel {
 	//Refresh the table once the Insert / Update / Delete queries has been executed
 	void refreshTable() {
 		
+		executeSQLUpdatePrice();
+		
 		try {
+			
+			
 
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 

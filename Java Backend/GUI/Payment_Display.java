@@ -9,6 +9,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -30,9 +33,15 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
 import CRUD.CRUD_2;
 import CRUD.ConnectDatabase;
+import CRUD.Guest;
 import CRUD.Payment;
 
 
@@ -48,6 +57,7 @@ public class Payment_Display extends JPanel {
 	private JTextField txtTotalAmount;
 	private JTextField txtEmpCode;
 	private JTextField textField;
+	private static int selectedRow;
 	
 
 
@@ -257,6 +267,38 @@ public class Payment_Display extends JPanel {
 		add(lblPaymentID);
 		
 		
+		
+		JButton btnPrintBill = new JButton("Print Bill");
+		btnPrintBill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String fileName = "";
+				fileName = JOptionPane.showInputDialog("File Name to save the chart: ");
+				
+				File tmpDir = new File("./"+fileName + ".pdf");
+				boolean exists = tmpDir.exists();
+				
+				while(exists == true) {
+					fileName = JOptionPane.showInputDialog("Please choose another file name as the file already exist: ");
+					tmpDir = new File("./"+fileName + ".pdf");
+					exists = tmpDir.exists();
+				}
+		
+				try { 
+					if(!fileName.equals(null) && exists == false  ) {
+						printJTable(table, fileName, selectedRow);
+						JOptionPane.showMessageDialog(null, "Saved successfully!");
+					}            
+		        } 
+		        catch(NullPointerException ne) { 
+		            System.out.print("Caught NullPointerException"); 
+		        }
+				
+			}
+		});
+		btnPrintBill.setBounds(79, 483, 145, 39);
+		add(btnPrintBill);
+		
+		
 
 		
 		//display the room panel 
@@ -312,6 +354,71 @@ public class Payment_Display extends JPanel {
 	}
 
 
+	
+	void executeSQLUpdateSubtotal() {
+		String query = "UPDATE payment p, amenities_usage_log aul, services_usage_log sul, food_order fo, reservation r SET p.subtotalAmount = aul.amenityTotalPrice + sul.servicesTotalPrice + fo.orderTotalPrice + r.reservationTotalPrice;";
+
+		
+		Connection conn = null;
+		java.sql.Statement stmt;
+		ResultSet rs;
+
+	       try{
+	    	   conn = DriverManager.getConnection(db.getURL(), db.getUserName(), db.getPassword()); //connect to the database
+	   		
+	    	   stmt = conn.createStatement();
+	    	   
+	    	   
+	    	   
+	           if((stmt.executeUpdate(query)) == 1)
+	           {
+	               // refresh jtable data
+	               DefaultTableModel model = (DefaultTableModel)table.getModel();
+	               model.setRowCount(0);
+	               refreshTable();
+
+	               
+	               System.out.println("Can Update");
+	           }else{
+	               System.out.println("Cannot Update");
+	           }
+	       }catch(Exception ex){
+	           ex.printStackTrace();
+	       }
+	}
+	
+	
+	void executeSQLUpdateTotal() {
+		String query = "UPDATE payment SET totalAmount = subtotalAmount + tipsAmount;";
+
+		
+		Connection conn = null;
+		java.sql.Statement stmt;
+		ResultSet rs;
+
+	       try{
+	    	   conn = DriverManager.getConnection(db.getURL(), db.getUserName(), db.getPassword()); //connect to the database
+	   		
+	    	   stmt = conn.createStatement();
+	    	   
+	    	   
+	    	   
+	           if((stmt.executeUpdate(query)) == 1)
+	           {
+	               // refresh jtable data
+	               DefaultTableModel model = (DefaultTableModel)table.getModel();
+	               model.setRowCount(0);
+	               refreshTable();
+
+	               
+	               System.out.println("Can Update");
+	           }else{
+	               System.out.println("Cannot Update");
+	           }
+	       }catch(Exception ex){
+	           ex.printStackTrace();
+	       }
+	}
 
 	/*
 	Executes Insert, Update and Delete Queries passed in when the user clicks the Add, Update or Delete Button
@@ -400,6 +507,8 @@ public class Payment_Display extends JPanel {
 				txtTotalAmount.setText(model.getValueAt(i, 8).toString());
 				txtPaymentDate.setText(model.getValueAt(i, 9).toString());
 				txtPaymentStatus.setText(model.getValueAt(i, 10).toString());
+				
+				selectedRow = i;
 	
 			}
 			
@@ -485,6 +594,9 @@ public class Payment_Display extends JPanel {
 	//Refresh the table once the Insert / Update / Delete queries has been executed
 	void refreshTable() {
 		
+		executeSQLUpdateSubtotal();
+		executeSQLUpdateTotal();
+		
 		try {
 
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -525,4 +637,71 @@ public class Payment_Display extends JPanel {
 		}
 		
 	}
+	
+	
+	public void printJTable(JTable table, String fileName, int row) {
+
+
+    	/*
+		 * 
+		 * Website: Stackoverflow
+		 * Title: Fitting a JTable in an iText PDF Document
+		 * Author: JWizard
+		 * Released Date: 11/02/15
+		 * Referred Date: 14/04/19
+		 * URL: https://stackoverflow.com/questions/28448377/fitting-a-jtable-in-an-itext-pdf-document
+		 * 
+		 * */
+    	try {
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream(fileName + ".pdf"));
+            doc.open();
+            
+
+            /*
+    		 * 
+    		 * Website: vogella
+    		 * Title: Creating PDF with Java and iText - Tutorial
+    		 * Author: Lars Vogel
+    		 * Released Date: 26/09/16
+    		 * Referred Date: 14/04/19
+    		 * URL: https://www.vogella.com/tutorials/JavaPDF/article.html
+    		 * 
+    		 * */
+            
+           /* Supplier_Interface s = new Supplier_Interface();
+            Employee_Interface e = new Employee_Interface();
+            Invoice_Interface in = new Invoice_Interface();
+            String productID = null ;
+            */
+            
+            Guest_Display g = new Guest_Display();
+            
+            Guest guest = new Guest(g.guestList);
+            guest.getRecord(g.guestList, table.getModel().getValueAt(row, 4).toString());
+ 
+            Paragraph subPara = new Paragraph("");
+          /*  subPara.add(new Paragraph("Invoice ID: " + invoiceID ));
+            subPara.add(new Paragraph("Supplier: " + supplierID + " ( " + s.supp.getRecord(s.suppList, supplierID).getSuppName() + " )"));
+            subPara.add(new Paragraph("Employee: " +  employeeID + " ( " + e.emp.getRecord(e.empList, employeeID).getFullName() + " )"));
+            subPara.add(new Paragraph("Total Price (RM) : " + in.inv.getRecord(in.invList, invoiceID).getTotalPrice()));
+            subPara.add(new Paragraph("Invoice Date: " + in.inv.getRecord(in.invList, invoiceID).getDate()));*/
+            subPara.add(new Paragraph("Guest: " + guest.getRecord(g.guestList, table.getModel().getValueAt(row, 5).toString()).getGuestName() ));
+            subPara.add(new Paragraph("Subtotal Amount: " + table.getModel().getValueAt(row, 6).toString() ));
+            subPara.add(new Paragraph("Tips Amount: " + table.getModel().getValueAt(row, 7).toString() ));
+            subPara.add(new Paragraph("Total Amount: " + table.getModel().getValueAt(row, 8).toString() ));
+        
+            subPara.add(new Paragraph(""));
+
+            doc.add(subPara);
+            
+
+            doc.close();
+            System.out.println("done");
+        } catch (DocumentException ex) {
+        	 System.out.print("Caught DocumentException"); 
+        } catch (FileNotFoundException ex) {
+        	System.out.print("Caught FileNotFoundException"); 
+        }
+    }
 }

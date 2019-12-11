@@ -371,5 +371,4 @@ public class RoomStatus_Display extends JPanel {
 		}
 		
 	}
-
 }
