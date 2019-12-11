@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 
 const con = require("../database/db")
 
-const mail = require("../database/mail")
+const mail = require("../database/mail") //For mailing
 
 bookings.use(cors())
 
@@ -19,6 +19,7 @@ bookings.post("/postBooking", (req, res) => { //Continue here
     // TO-DO: Add return response of ID / email is used. 
     console.log("\nOutput received from /postBooking => req.body:")
     console.log(req.body)
+
     var insertData = {
         email: req.body.email.toLowerCase(),
         name:req.body.name,
@@ -31,23 +32,40 @@ bookings.post("/postBooking", (req, res) => { //Continue here
         checkOut:req.body.checkOut,
         specialNote:req.body.specialNote 
     }
+
     console.log("\n")
     console.log("Processed JSON in local var:")
     console.log(insertData)
-    var sqlQuery = "INSERT INTO reservation value()";
 
     res.json({Pass:1}) //return test
     
-    // var sqlQuery = "INSERT INTO userspoll value('" + insertData.ID + "','" + insertData.publicAddress + "')";
-    // con.query(sqlQuery, function(err, result){
-    //     if(err){
-    //         console.log(err)            
-	// 	}else{
-    //         res.json({ Pass: 1})
-    //         console.log(result.affectedRows + " record(s) updated")
-	// 	}
-	// });
+    var sqlQuery = "INSERT INTO guest value('" + insertData.name + "')";
+    var sqlQuery2 = "INSERT INTO reservation value('" + insertData.checkIn +"')";
 
+
+    con.query(sqlQuery, function(err, result){
+        if(err){
+            console.log(err)            
+		}else{
+            res.json({ Pass: 1})
+            console.log(result.affectedRows + " record(s) updated")
+		}
+	});
+
+    // var mailOptions = {
+    //     from: 'stackoverkill@outlook.com',
+    //     to: insertData.email,
+    //     subject: '[Confirmed] Reservation made with Giant Forest Inn Hotel',
+    //     text: 'Your reservation has been made! We hope to see you soon!'
+    // };
+
+    // transporter.sendMail(mailOptions, function(error, info){
+    //     if (error) {
+    //     console.log(error);
+    //     } else {
+    //     console.log('Email sent: ' + info.response);
+    //     }
+    // });
 })
 
 // Below is code examples:

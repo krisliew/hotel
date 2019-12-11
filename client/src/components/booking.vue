@@ -144,8 +144,7 @@ export default {
         }
       },
       onSubmit(evt) {
-        console.log(JSON.stringify(this.form))
-        alert(JSON.stringify(this.form))
+        console.log(this.form)
 
         axios.post('/api/postBooking',
             { 
