@@ -83,6 +83,7 @@ public class Main_Display extends JFrame {
 	void reservations(JSplitPane splitPane) {// Change to reservations pane	
 		Reservation_Display reservations = new Reservation_Display();
 		splitPane.setRightComponent(reservations);
+	
 	}
 	
 	
@@ -180,6 +181,8 @@ public class Main_Display extends JFrame {
 		panelLeftNav.add(lblLogo);
 		
 		
+		reservations(splitPane);
+		
 		btnReservation = new JButton("Reservation");
 		btnReservation.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -207,6 +210,8 @@ public class Main_Display extends JFrame {
 			}
 		});
 		panelLeftNav.add(btnReservation);
+		
+		
 		
 		btnGuest = new JButton("Guest");
 		btnGuest.addChangeListener(new ChangeListener() {

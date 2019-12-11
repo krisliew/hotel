@@ -312,6 +312,71 @@ public class Payment_Display extends JPanel {
 	}
 
 
+	
+	void executeSQLUpdateSubtotal() {
+		String query = "UPDATE payment p, amenities_usage_log aul, services_usage_log sul, food_order fo, reservation r SET p.subtotalAmount = aul.amenityTotalPrice + sul.servicesTotalPrice + fo.orderTotalPrice + r.reservationTotalPrice;";
+
+		
+		Connection conn = null;
+		java.sql.Statement stmt;
+		ResultSet rs;
+
+	       try{
+	    	   conn = DriverManager.getConnection(db.getURL(), db.getUserName(), db.getPassword()); //connect to the database
+	   		
+	    	   stmt = conn.createStatement();
+	    	   
+	    	   
+	    	   
+	           if((stmt.executeUpdate(query)) == 1)
+	           {
+	               // refresh jtable data
+	               DefaultTableModel model = (DefaultTableModel)table.getModel();
+	               model.setRowCount(0);
+	               refreshTable();
+
+	               
+	               System.out.println("Can Update");
+	           }else{
+	               System.out.println("Cannot Update");
+	           }
+	       }catch(Exception ex){
+	           ex.printStackTrace();
+	       }
+	}
+	
+	
+	void executeSQLUpdateTotal() {
+		String query = "UPDATE payment SET totalAmount = subtotalAmount + tipsAmount;";
+
+		
+		Connection conn = null;
+		java.sql.Statement stmt;
+		ResultSet rs;
+
+	       try{
+	    	   conn = DriverManager.getConnection(db.getURL(), db.getUserName(), db.getPassword()); //connect to the database
+	   		
+	    	   stmt = conn.createStatement();
+	    	   
+	    	   
+	    	   
+	           if((stmt.executeUpdate(query)) == 1)
+	           {
+	               // refresh jtable data
+	               DefaultTableModel model = (DefaultTableModel)table.getModel();
+	               model.setRowCount(0);
+	               refreshTable();
+
+	               
+	               System.out.println("Can Update");
+	           }else{
+	               System.out.println("Cannot Update");
+	           }
+	       }catch(Exception ex){
+	           ex.printStackTrace();
+	       }
+	}
 
 	/*
 	Executes Insert, Update and Delete Queries passed in when the user clicks the Add, Update or Delete Button
@@ -484,6 +549,9 @@ public class Payment_Display extends JPanel {
 
 	//Refresh the table once the Insert / Update / Delete queries has been executed
 	void refreshTable() {
+		
+		executeSQLUpdateSubtotal();
+		executeSQLUpdateTotal();
 		
 		try {
 

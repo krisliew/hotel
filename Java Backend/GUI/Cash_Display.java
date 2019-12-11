@@ -379,20 +379,12 @@ public class Cash_Display extends JPanel {
 			
 				cashRefer = cash.getIndex(cashList, i);
 			
-		
-				
 				row[0] = cash.getRecord(cashList, cashRefer.getPaymentMethodID()).getPaymentMethodID();
 				row[1] = cash.getRecord(cashList, cashRefer.getPaymentMethodID()).getPaymentMethodName();
 
-		
-
-				
-				
 				model.addRow(row);
 			}
-			
-			
-			
+
 			
 		}catch(Exception e) {
 			e.printStackTrace();
