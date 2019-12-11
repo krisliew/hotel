@@ -119,7 +119,7 @@ public class Main_Display extends JFrame {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        if (JOptionPane.showConfirmDialog(null, "Are you sure you want to close this window and logout?", "Close Window?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+		        if (JOptionPane.showConfirmDialog(null, "Are you sure you want to close this window?", "Close Window?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 		        	System.exit(0);
 		        }else {
 		        	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
