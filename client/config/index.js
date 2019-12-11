@@ -11,9 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/users':{ //WHen post to this link
-      //   target: 'http://localhost:5000', // Back end route
-      //   changeOrigin:true
+      '/api':{ //WHen post to this link
+        target: 'http://localhost:5000', // Back end route
+        changeOrigin:true
+      },
     },
 
     // Various Dev Server settings

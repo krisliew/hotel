@@ -52,8 +52,8 @@
 
         <b-form-group label="Gender:" id="input-group-5">
             <b-form-radio-group v-model="form.gender" id="radio-5" >
-            <b-form-radio value="Male">Male</b-form-radio>
-            <b-form-radio value="Female">Female</b-form-radio>
+            <b-form-radio value="male">Male</b-form-radio>
+            <b-form-radio value="female">Female</b-form-radio>
             </b-form-radio-group>
         </b-form-group>
 
@@ -70,8 +70,8 @@
         <b-form-group id="input-group-7" label="Room view:" label-for="input-7">
             <b-form-select
             id="input-7"
-            v-model="form.roomType"
-            :options="roomTypes"
+            v-model="form.roomView"
+            :options="roomViews"
             
             ></b-form-select>
         </b-form-group>
@@ -87,6 +87,7 @@
         
         <b-form-group label="Special Request Note:" id="input-group-9">
             <b-form-textarea
+                v-model="form.specialNote"
                 id="textarea-auto-height"
                 placeholder="Optional note"
                 rows="3"
@@ -124,12 +125,13 @@ export default {
             phoneNumber : '',
             gender: '',
             room: null,
-            roomType: null,
+            roomView: null,
             checkIn: '',
-            checkOut: ''    
+            checkOut: '',
+            specialNote:''
         },
         rooms: [{ text: 'Select One', value: null }, 'Queen 1', 'Queen 2', 'Two Room', 'Three Room','Bridal','Cottage Double','Cottage Triple','Cottage Four'],
-        roomTypes:[{ text: 'Select One', value: null }, 'Patio 1', 'Patio 2', 'Forest 1', 'Forest 2'],
+        roomViews:[{ text: 'Select One', value: null }, 'Patio 1', 'Patio 2', 'Forest 1', 'Forest 2'],
         show: true      
     }
   },
@@ -144,12 +146,18 @@ export default {
         console.log(JSON.stringify(this.form))
         alert(JSON.stringify(this.form))
 
-        axios.post('/postBooking',
-            {
-              ID:this.username,
-              email:this.email,
-              password:this.password,
-              publicAddress:this.publicAddress
+        axios.post('/api/postBooking',
+            { 
+              email:this.form.email,
+              name:this.form.name,
+              address:this.form.address,
+              phoneNumber:this.form.phoneNumber,
+              gender:this.form.gender,
+              room:this.form.room,
+              roomView:this.form.roomView,
+              checkIn:this.form.checkIn,
+              checkOut:this.form.checkOut,
+              specialNote:this.form.specialNote           
             }).then(res => {
                 console.log(res) //Return of the Post method from localhost:5000/postBooking
               if(res.data.Error == 1){
@@ -157,7 +165,7 @@ export default {
               }              
             }).catch(err => {
               console.log(err)
-              this.publicAddressErr = "Connection Error: Please try again later or contact support!'"
+              alert("Connection Error: Please try again later or contact support!")
             })
         
       },
@@ -168,8 +176,8 @@ export default {
         this.form.address = ''
         this.form.phoneNumber = ''
         this.form.gender = ''
-        this.form.room = null
-        this.form.roomType = null
+        this.form.room = ''
+        this.form.roomType = ''
         this.form.checkIn = ''
         this.form.checkOut = ''
         // Trick to reset/clear native browser form validation state

@@ -17,13 +17,26 @@ bookings.get("/test",(req,res) =>{
 
 bookings.post("/postBooking", (req, res) => { //Continue here
     // TO-DO: Add return response of ID / email is used. 
+    console.log("\nOutput received from /postBooking => req.body:")
     console.log(req.body)
     var insertData = {
-        
+        email: req.body.email.toLowerCase(),
+        name:req.body.name,
+        address:req.body.address,
+        phoneNumber:req.body.phoneNumber,
+        gender:req.body.gender,
+        room:req.body.room,
+        roomView:req.body.roomView,
+        checkIn:req.body.checkIn,
+        checkOut:req.body.checkOut,
+        specialNote:req.body.specialNote 
     }
     console.log("\n")
-    console.log("/postBooking JSON:" + insertData)
+    console.log("Processed JSON in local var:")
     console.log(insertData)
+
+    res.json({Pass:1}) //return test
+    
     // var sqlQuery = "INSERT INTO userspoll value('" + insertData.ID + "','" + insertData.publicAddress + "')";
     // con.query(sqlQuery, function(err, result){
     //     if(err){

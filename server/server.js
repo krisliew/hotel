@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 var Booking = require("./routes/booking")
 
-app.use("/", Booking) 
+app.use("/api", Booking) 
 
 app.listen(port, () => {
     console.log("Server is running on port: " + port)
