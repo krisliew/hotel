@@ -1,6 +1,7 @@
 <template>
 <section id="booking">
     <div class="header">
+        <img src="../assets/img/headerStar.png"/>
         <h1>Booking</h1>
         <p>Make your reservation here.</p>
     </div>
@@ -170,16 +171,17 @@ export default {
         
       },
       onReset(evt) {
-        // Reset our form values
+        // Reset form values
         this.form.email = ''
         this.form.name = ''
         this.form.address = ''
         this.form.phoneNumber = ''
         this.form.gender = ''
-        this.form.room = ''
-        this.form.roomType = ''
+        this.form.room = null
+        this.form.roomView = null
         this.form.checkIn = ''
         this.form.checkOut = ''
+        this.form.specialNote = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {
@@ -202,5 +204,9 @@ export default {
     padding-top:50px;
     padding-bottom:18px;
     text-align: center;
+}
+.header h1{
+    padding-top: 30px;    
+    padding-bottom: 18px;
 }
 </style>

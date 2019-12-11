@@ -1,14 +1,11 @@
 <template>
 <section>
-    <div class="hello">
-    <h1>{{ msg }}</h1>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      With Bootstrap!
+      Welcome!
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  </div>
 </section>
 </template>
 
@@ -17,7 +14,6 @@ export default {
   name: 'Home',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
   }
 }

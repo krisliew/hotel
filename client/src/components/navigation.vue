@@ -1,6 +1,6 @@
 <template>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/">Logo</a>
+  <a class="navbar-brand" href="/">Giant Forest Inn</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
