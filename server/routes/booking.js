@@ -2,14 +2,9 @@ const express = require("express")
 const bookings = express.Router()
 const cors = require("cors")
 const jwt = require("jsonwebtoken")
-
 const con = require("../database/db")
-
 const mail = require("../database/mail") //For mailing
-
 bookings.use(cors())
-
-process.env.SECRET_KEY = 'secret'
 
 bookings.get("/test",(req,res) =>{   
     res.json({msg: "API Test passed"})
@@ -32,25 +27,87 @@ bookings.post("/postBooking", (req, res) => { //Continue here
         checkOut:req.body.checkOut,
         specialNote:req.body.specialNote 
     }
+    //Switch to accomodate Reservation table
+    switch(insertData.room){
+        case "Queen 1": case "Queen 2": case "Two Room": case "Three Room": case "Bridal":
+            insertData.room = "HR1"
+            break;
+        case "Cottage Double": case "Cottage Triple":case "Cottage Four":
+            insertData.room = "CR1"
+            break;
+        default:
+            res.json({Error: 1})
+            break;
+    }
 
     console.log("\n")
     console.log("Processed JSON in local var:")
-    console.log(insertData)
+    console.log(insertData) //Complete JSON data
 
-    res.json({Pass:1}) //return test
-    
-    var sqlQuery = "INSERT INTO guest value('" + insertData.name + "')";
-    var sqlQuery2 = "INSERT INTO reservation value('" + insertData.checkIn +"')";
-
-
-    con.query(sqlQuery, function(err, result){
+    var getQuery = "SELECT GuestID FROM Guest"
+    con.query(getQuery, function(err,result1){        
         if(err){
             console.log(err)            
-		}else{
-            res.json({ Pass: 1})
-            console.log(result.affectedRows + " record(s) updated")
-		}
-	});
+        }else{
+        //Begin generating new guest ID
+        var largestID = result1[result1.length-1]
+        largestID = JSON.stringify(largestID) // Now a string
+        largestID = largestID.substr(13) // {digit}"}
+        largestID = largestID.substring(0,largestID.length -2) // {digit}
+        largestID = parseInt(largestID) //Now an integer {digit}
+
+        var guestID = "G" + (largestID + 1) // G + {digit+1}
+        console.log(guestID)
+        //end of generating new Guest ID
+        //Insert into Guest table
+        var sqlQueryGuest = "INSERT INTO guest value('" + guestID + "','"+ insertData.name + "','"+ insertData.address + "','" + insertData.phoneNumber + "','" + insertData.email + "','" + insertData.gender + "')"
+        con.query(sqlQueryGuest, function(err2, result2){
+            if(err2){
+                console.log(err2)
+            }else{
+            console.log(result2.affectedRows + " record(s) inserted (GUEST Table)")
+            
+            var getQuery2 = "SELECT reservationID FROM reservation"
+            con.query(getQuery2, function(err3,result3){      
+                if(err3){
+                    console.log(err3)
+                }else{
+                    //Begin generating new reservationID                    
+                    var largestID2 = result3[result3.length-1]                    
+                    largestID2 = JSON.stringify(largestID2) // Now a string                    
+                    largestID2 = largestID2.substr(19) // {digit}"}
+                    largestID2 = largestID2.substring(0,largestID2.length -2) // {digit}
+                    largestID2 = parseInt(largestID2) //Now an integer {digit}
+
+                    var reservationID = "R" + (largestID2 + 1) // R + {digit+1}
+                    console.log(reservationID)
+                    //end of generating new reservationID
+                    //Insert into reservation table
+                    var sqlQueryReservation = "INSERT INTO reservation value('" + reservationID + "','" + insertData.room + "','" + guestID + "','DATE_FORMAT(" + insertData.checkIn + ",'YYYY-MM-DD')',null,'DATE_FORMAT(" + insertData.checkOut + ",'YYYY-MM-DD')',null,null,'Success',null,'" + insertData.specialNote + "')"
+                    con.query(sqlQueryReservation, function(err4,result4){
+                        if(err4){
+                            console.log(err4)
+                        }else{
+                            console.log(result4.affectedRows + " record(s) inserted (Reservation Table)")
+                        }
+                    })
+                }
+            });           
+
+            }
+        });
+            res.json({ Pass : 1})
+        }
+    });
+        
+    // con.query(sqlQuery, function(err, result2){
+    //     if(err){
+    //         console.log(err)            
+	// 	}else{
+    //         res.json({ Pass: 1})
+    //         console.log(result2.affectedRows + " record(s) updated")
+	// 	}
+	// });
 
     // var mailOptions = {
     //     from: 'stackoverkill@outlook.com',
