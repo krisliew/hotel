@@ -87,8 +87,23 @@ bookings.post("/postBooking", (req, res) => { //Continue here
                     con.query(sqlQueryReservation, function(err4,result4){
                         if(err4){
                             console.log(err4)
-                        }else{
+                        }else{                            
                             console.log(result4.affectedRows + " record(s) inserted (Reservation Table)")
+                            //Send email confirmed
+                            var mailOptions = {
+                                from: 'stackoverkill@outlook.com',
+                                to: insertData.email,
+                                subject: '[Confirmed] Reservation made with Giant Forest Inn Hotel',
+                                text: 'Your reservation has been made! We hope to see you soon!'
+                            };
+                        
+                            transporter.sendMail(mailOptions, function(error, info){
+                                if (error) {
+                                console.log(error);
+                                } else {
+                                console.log('Email sent: ' + info.response);
+                                }
+                            });
                         }
                     })
                 }
@@ -99,30 +114,6 @@ bookings.post("/postBooking", (req, res) => { //Continue here
             res.json({ Pass : 1})
         }
     });
-        
-    // con.query(sqlQuery, function(err, result2){
-    //     if(err){
-    //         console.log(err)            
-	// 	}else{
-    //         res.json({ Pass: 1})
-    //         console.log(result2.affectedRows + " record(s) updated")
-	// 	}
-	// });
-
-    // var mailOptions = {
-    //     from: 'stackoverkill@outlook.com',
-    //     to: insertData.email,
-    //     subject: '[Confirmed] Reservation made with Giant Forest Inn Hotel',
-    //     text: 'Your reservation has been made! We hope to see you soon!'
-    // };
-
-    // transporter.sendMail(mailOptions, function(error, info){
-    //     if (error) {
-    //     console.log(error);
-    //     } else {
-    //     console.log('Email sent: ' + info.response);
-    //     }
-    // });
 })
 
 // Below is code examples:
