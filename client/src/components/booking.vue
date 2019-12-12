@@ -276,8 +276,8 @@ export default {
                     //do smtg demo
                 }              
                 }).catch(err => {
-                console.log(err)
-                alert("Connection Error: Please try again later or contact support!")
+                    console.log(err)
+                    alert("Connection Error: Please try again later or contact support!")
                 })        
         }
         
