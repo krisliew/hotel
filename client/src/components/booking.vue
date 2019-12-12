@@ -254,7 +254,8 @@ export default {
           this.formClick = true
           console.log(this.form)
           
-        if(this.validateName && this.validateAddress && this.validatePhoneNumber && this.validateEmail){
+        if(this.validateName == true && this.validateAddress == true && this.validatePhoneNumber == true  && this.validateEmail == true 
+            && this.validateGender == true && this.validateRoom == true && this.validateRoomView  == true && this.validateDatePicker == true){
             console.log("Form passed!")
 
             axios.post('/api/postBooking',

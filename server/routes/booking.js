@@ -3,7 +3,17 @@ const bookings = express.Router()
 const cors = require("cors")
 const jwt = require("jsonwebtoken")
 const con = require("../database/db")
-const mail = require("../database/mail") //For mailing
+
+//mailing
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'hotmail',
+  auth: {
+    user: 'stackoverkill@outlook.com', //testing junk email
+    pass: 'tothemars!' //testing junk email
+  }
+});
+
 bookings.use(cors())
 
 bookings.get("/test",(req,res) =>{   
@@ -95,7 +105,7 @@ bookings.post("/postBooking", (req, res) => { //Continue here
                                 to: insertData.email,
                                 subject: '[Confirmed] Reservation made with Giant Forest Inn Hotel',
                                 text: 'Your reservation has been made! We hope to see you soon!'
-                            };
+                            };                            
                         
                             transporter.sendMail(mailOptions, function(error, info){
                                 if (error) {
