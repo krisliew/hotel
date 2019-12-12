@@ -246,7 +246,7 @@ export default {
       formatDates(date) {
         let formattedDates = ''
         if (date) {
-            return format(date, 'DD/MM/YYYY')
+            return format(date, 'YYYY/MM/DD')
         }
       },
       onSubmit(evt) {

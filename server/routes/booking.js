@@ -45,9 +45,9 @@ bookings.post("/postBooking", (req, res) => { //Continue here
     console.log(insertData) //Complete JSON data
 
     var getQuery = "SELECT GuestID FROM Guest"
-    con.query(getQuery, function(err,result1){        
+    con.query(getQuery, function(err,result1){
         if(err){
-            console.log(err)            
+            console.log(err)
         }else{
         //Begin generating new guest ID
         var largestID = result1[result1.length-1]
@@ -68,13 +68,13 @@ bookings.post("/postBooking", (req, res) => { //Continue here
             console.log(result2.affectedRows + " record(s) inserted (GUEST Table)")
             
             var getQuery2 = "SELECT reservationID FROM reservation"
-            con.query(getQuery2, function(err3,result3){      
+            con.query(getQuery2, function(err3,result3){
                 if(err3){
                     console.log(err3)
                 }else{
-                    //Begin generating new reservationID                    
-                    var largestID2 = result3[result3.length-1]                    
-                    largestID2 = JSON.stringify(largestID2) // Now a string                    
+                    //Begin generating new reservationID
+                    var largestID2 = result3[result3.length-1]
+                    largestID2 = JSON.stringify(largestID2) // Now a string
                     largestID2 = largestID2.substr(19) // {digit}"}
                     largestID2 = largestID2.substring(0,largestID2.length -2) // {digit}
                     largestID2 = parseInt(largestID2) //Now an integer {digit}
@@ -83,7 +83,7 @@ bookings.post("/postBooking", (req, res) => { //Continue here
                     console.log(reservationID)
                     //end of generating new reservationID
                     //Insert into reservation table
-                    var sqlQueryReservation = "INSERT INTO reservation value('" + reservationID + "','" + insertData.room + "','" + guestID + "','DATE_FORMAT(" + insertData.checkIn + ",'YYYY-MM-DD')',null,'DATE_FORMAT(" + insertData.checkOut + ",'YYYY-MM-DD')',null,null,'Success',null,'" + insertData.specialNote + "')"
+                    var sqlQueryReservation = "INSERT INTO reservation value('" + reservationID + "','" + insertData.room + "','" + guestID + "','" + insertData.checkIn + "',null,'" + insertData.checkOut + "',null,null,'Success',null,'" + insertData.specialNote + "')"
                     con.query(sqlQueryReservation, function(err4,result4){
                         if(err4){
                             console.log(err4)
