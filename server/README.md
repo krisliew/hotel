@@ -14,4 +14,4 @@ npm install -g nodemon
 
 # serve with hot reload at localhost:5000
 nodemon server.js
-localhost:5000/test to test if working
+localhost:5000/api/test to test if working
